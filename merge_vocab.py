@@ -1,4 +1,5 @@
 import os
+import argparse
 def merge_vocab(vocab_prefix, suffix0, suffix1):
     with open("%s.counted.%s" % (vocab_prefix, suffix0), 'r') as fp:
         vocab0 = [l.strip().split() for l in fp.readlines()]
