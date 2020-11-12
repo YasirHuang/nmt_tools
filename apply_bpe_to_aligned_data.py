@@ -18,7 +18,7 @@ class Sentence:
         return ' '.join(s)
         
 class Phrase:
-    def __init__(self, phrase=None, words=None, sentence:Sentence=None):
+    def __init__(self, phrase=None, words=None, sentence=None):
         self.phrase = phrase['phrase'].lower()
         self.first_word_index = phrase['first_word_index']
         self.phrase_id = phrase['phrase_id']
@@ -36,7 +36,7 @@ class Phrase:
         return str(self.__dict__())
         
 class Word:
-    def __init__(self, word=None, phrase:Phrase=None, sentence=None):
+    def __init__(self, word=None, phrase=None, sentence=None):
         self.word=word
         self.phrase=phrase
         self.sentence=sentence
