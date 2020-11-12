@@ -1,3 +1,4 @@
+import argparse
 class Sentence:
     def __init__(self, words=None, phrases=None, sentence=None):
         self.words = words if words is not None else []
@@ -131,15 +132,44 @@ def align_corpus(bpe_sentence_file, splits_file, json_file, out_json_file):
     with open(out_json_file, 'w') as fp:
         json.dump(aligned_sentences, fp)
         
-align_corpus("./train.fixed.tok.lc.sharevocab.bpe.en", 
-             "../original/splits/train_images.txt",
-             "./train.fixed.tok.en.tagged.json",
-             "./train.fixed.tok.lc.bpe.en.tagged.json")
-align_corpus("./val.tok.lc.sharevocab.bpe.en", 
-             "../original/splits/val_images.txt",
-             "./val.tok.en.tagged.json",
-             "./val.tok.lc.bpe.en.tagged.json")
-align_corpus("./test2016.tok.lc.sharevocab.bpe.en", 
-             "../original/splits/test_images.txt",
-             "./test2016.tok.en.tagged.json",
-             "./test2016.tok.lc.bpe.en.tagged.json")
+# align_corpus("./train.fixed.tok.lc.sharevocab.bpe.en", 
+#              "../original/splits/train_images.txt",
+#              "./train.fixed.tok.en.tagged.json",
+#              "./train.fixed.tok.lc.bpe.en.tagged.json")
+# align_corpus("./val.tok.lc.sharevocab.bpe.en", 
+#              "../original/splits/val_images.txt",
+#              "./val.tok.en.tagged.json",
+#              "./val.tok.lc.bpe.en.tagged.json")
+# align_corpus("./test2016.tok.lc.sharevocab.bpe.en", 
+#              "../original/splits/test_images.txt",
+#              "./test2016.tok.en.tagged.json",
+#              "./test2016.tok.lc.bpe.en.tagged.json")
+
+
+def add_arguments(parser):
+    """Build ArgumentParser."""
+    parser.register("type", "bool", lambda v: v.lower() == "true")
+
+    parser.add_argument("--bpe_sentence_file", type=str, default="./train.fixed.tok.lc.bpe.en",
+                        help="")
+    parser.add_argument("--split_file", type=str, default='/home/xhuang/work/corpus/Multi30K/original/splits/train_images.txt',
+                        help="")
+    parser.add_argument("--json_file", type=str, default='./train.fixed.tok.en.tagged.json',
+                        help="")
+    parser.add_argument("--out_json_file", type=str, default="./train.fixed.tok.lc.bpe.en.tagged.json",
+                        help="")
+
+def main(FLAGS):
+    align_corpus(
+        FLAGS.bpe_sentence_file,
+        FLAGS.split_file,
+        FLAGS.json_file,
+        FLAGS.out_json_file)
+
+
+if __name__ == "__main__":
+    cc_parser = argparse.ArgumentParser()
+    add_arguments(cc_parser)
+    FLAGS, unparsed = cc_parser.parse_known_args()
+    # tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)
+    main(FLAGS)
