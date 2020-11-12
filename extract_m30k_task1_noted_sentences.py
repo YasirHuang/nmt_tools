@@ -1,3 +1,5 @@
+#coding=utf-8
+from __future__ import print_function
 from flickr30k_entities_utils import get_annotations, get_sentence_data
 import os
 import json
@@ -55,10 +57,10 @@ def test_match(sent_id, split_file, sentence_file, annoted_sentence_dir='./Sente
         split_sent_dict[s_id] = sent
     
     ret_annoted_sent, sent_score = sentence_match(annoted_sent, split_sent_dict[sent_id])
-    print annoted_sent
-    print ret_annoted_sent
-    print sent_score
-    print split_sent_dict[sent_id]
+    print(annoted_sent)
+    print(ret_annoted_sent)
+    print(sent_score)
+    print(split_sent_dict[sent_id])
 #test_match('4641889254', './splits/train_images.txt', '/home/xhuang/work/corpus/Multi30K/task1/train.tok.en')
 
 def extract(split_file, sentence_file, annoted_sentence_dir):
@@ -75,9 +77,9 @@ def extract(split_file, sentence_file, annoted_sentence_dir):
         annoted_sent = get_sentence_data(os.path.join(annoted_sentence_dir, "%s.txt"%sent_id))
         selected_annoted_sent, score = sentence_match(annoted_sent, sent)
         if score < 1.0:
-            print sent_id, score
-            print selected_annoted_sent
-            print sent
+            print(sent_id, score)
+            print(selected_annoted_sent)
+            print(sent)
 
         results[sent_id] = selected_annoted_sent
     return results
