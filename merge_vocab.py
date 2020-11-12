@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os
 import argparse
 def merge_vocab(vocab_prefix, suffix0, suffix1):
@@ -39,9 +40,20 @@ def add_arguments(parser):
 
 def main(FLAGS):
     assert isinstance(FLAGS.langs, list)
-    assert len(FLAGS.langs) == 2
-    l0, l1 = FLAGS.langs[0], FLAGS.langs[1]
-    merge_vocab(FLAGS.vocab_prefix, l0, l1)
+    assert len(FLAGS.langs) >= 2
+    resolved_pair = []
+    for l0 in FLAGS.langs:
+        for l1 in FLAGS.langs:
+            if l0 == l1:
+                continue
+            if "%s-%s" % (l0, l1) in resolved_pair or "%s-%s" % (l1, l0) in resolved_pair:
+                continue
+            lang_pair = "%s-%s" % (l0, l1)
+            resolved_pair.append(lang_pair)
+            print("merge language pair:", lang_pair)
+            merge_vocab(FLAGS.vocab_prefix, l0, l1)
+    #l0, l1 = FLAGS.langs[0], FLAGS.langs[1]
+    #merge_vocab(FLAGS.vocab_prefix, l0, l1)
 
 
 if __name__ == "__main__":
