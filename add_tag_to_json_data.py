@@ -73,7 +73,7 @@ def add_word_tag(splits_file, json_file, output_json_file, key_word_list_file, k
 
     tag_corpus(splits, sentences_json, key_word_list, key_word_pos_list)
     with open(output_json_file, 'w') as fp:
-        json.dump(sentences_json, fp)
+        json.dump(sentences_json, fp, indent=4)
         
 
 def boolean_string(s):

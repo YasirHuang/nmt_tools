@@ -130,7 +130,7 @@ def align_corpus(bpe_sentence_file, splits_file, json_file, out_json_file):
         aligned_sentences[split] = parsed_aligned_sentence.__dict__()
     
     with open(out_json_file, 'w') as fp:
-        json.dump(aligned_sentences, fp)
+        json.dump(aligned_sentences, fp, indent=4)
         
 # align_corpus("./train.fixed.tok.lc.sharevocab.bpe.en", 
 #              "../original/splits/train_images.txt",

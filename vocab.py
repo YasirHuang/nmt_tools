@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os
 import argparse
 
@@ -25,29 +26,29 @@ def main(FLAGS):
     OUT_PATH = os.path.join(FLAGS.out_dir, '%s.%s' % (FLAGS.out_file_name, FLAGS.lang))
     OUT_PATH2 = os.path.join(FLAGS.out_dir, '%s.%s' % (FLAGS.out_counted_file_name, FLAGS.lang))
 
-    fr = open(IN_PATH, 'rb')
-    fw = open(OUT_PATH, 'wb')
-    fw2 = open(OUT_PATH2, 'wb')
+    fr = open(IN_PATH, 'r')
+    fw = open(OUT_PATH, 'w')
+    fw2 = open(OUT_PATH2, 'w')
 
     vocab = {}
     sentence = fr.readline()
     while (sentence):
         words = sentence.split()
         for word in words:
-            if vocab.has_key(word):
+            if word in vocab:
                 vocab[word] = vocab[word] + 1
             else:
                 vocab[word] = 1
         sentence = fr.readline()
 
-    dict = sorted(vocab.iteritems(), key=lambda d: d[1], reverse=True)
+    vocab_dict = sorted(vocab.items(), key=lambda d: d[1], reverse=True)
     count = 0
-    for item in dict:
+    for item in vocab_dict:
         if item[1] < min_show_time:
             continue
         count = count + 1
-        fw.write(item[0] + "\n")
-        fw2.write('%s\t%s\n' % (item[0], item[1]))
+        fw.write('%s\n' % item[0])
+        fw2.write('%s\t%d\n' % (item[0], item[1]))
         if count >= max_vocab_length:
             break
     fr.close()

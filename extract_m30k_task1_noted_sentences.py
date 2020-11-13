@@ -103,7 +103,7 @@ def main(FLAGS):
                       FLAGS.sentences_file, 
                       FLAGS.annoted_sentence_path)
     with open(FLAGS.output_file, 'w') as fp:
-        json.dump(results, fp)  
+        json.dump(results, fp, indent=4)  
 
 
 if __name__ == "__main__":
