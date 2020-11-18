@@ -66,7 +66,7 @@ def modified_precision_plusone(references, hypothesis, n):
 	return Fraction(1+sum(clipped_counts.values()), 1+sum(counts.values())) 
     
    
-def bleu_plus_one(references,ref_num, hypothesis, ngram_order):
+def bleu_plus_one(references,ref_num, hypothesis, ngram_order, print_result=True):
 	if len(references) != ref_num:
 		return 0.0
 
@@ -83,7 +83,8 @@ def bleu_plus_one(references,ref_num, hypothesis, ngram_order):
 	ngram_precisions = [0.25*math.log(p_i) for p_i in ngram_precisions]
 
 	result = bp * math.exp(math.fsum(ngram_precisions))
-	print (result)
+	if print_result:
+		print (result)
 	return result
 
 
