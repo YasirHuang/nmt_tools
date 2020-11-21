@@ -61,7 +61,7 @@ def test_match(sent_id, split_file, sentence_file, annoted_sentence_dir='./Sente
     print(ret_annoted_sent)
     print(sent_score)
     print(split_sent_dict[sent_id])
-#test_match('4641889254', './splits/train_images.txt', '/home/xhuang/work/corpus/Multi30K/task1/train.tok.en')
+#test_match('4641889254', '/home/xhuang/work/corpus/multi30k/original/splits/train_images.txt', '/home/xhuang/work/corpus/Multi30K/task1/train.tok.en', '/home/xhuang/work/corpus/multi30k/original/Sentences')
 
 def extract(split_file, sentence_file, annoted_sentence_dir):
     with open(split_file, 'r') as fp:
@@ -75,7 +75,15 @@ def extract(split_file, sentence_file, annoted_sentence_dir):
         sent_id = sent_id.strip().split('.')[0]
         sent = sent.strip()
         annoted_sent = get_sentence_data(os.path.join(annoted_sentence_dir, "%s.txt"%sent_id))
-        selected_annoted_sent, score = sentence_match(annoted_sent, sent)
+        annoted_sentences = []
+        for asent in annoted_sent:
+            asent_s = asent['sentence'].lower()
+            asent_p = []
+            for p in asent['phrases']:
+                p['phrase'] = p['phrase'].lower()
+                asent_p.append(p)
+            annoted_sentences.append({'sentence': asent_s, 'phrases': asent_p})
+        selected_annoted_sent, score = sentence_match(annoted_sentences, sent)
         if score < 1.0:
             print(sent_id, score)
             print(selected_annoted_sent)
