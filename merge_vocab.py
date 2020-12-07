@@ -33,7 +33,7 @@ def add_arguments(parser):
     """Build ArgumentParser."""
     parser.register("type", "bool", lambda v: v.lower() == "true")
 
-    parser.add_argument("--langs", type=str, default=['en', 'de'],
+    parser.add_argument("--langs", nargs='+', type=str, default=['en', 'de'],
                         help="")
     parser.add_argument("--vocab_prefix", type=str, default='/home/xhuang/work/corpus/Multi30K/task1_fixed_by_task2/vocab.tok.lc',
                         help="")
@@ -41,6 +41,7 @@ def add_arguments(parser):
 def main(FLAGS):
     assert isinstance(FLAGS.langs, list)
     assert len(FLAGS.langs) >= 2
+    print("languages: ", FLAGS.langs)
     resolved_pair = []
     for l0 in FLAGS.langs:
         for l1 in FLAGS.langs:
