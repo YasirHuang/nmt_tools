@@ -82,7 +82,7 @@ def parse_aligned_sentence(aligned_sentence):
         for i, w in enumerate(the_phrase.phrase.strip().split()):
             the_word = the_sentence.words[i+the_phrase.first_word_index]
             assert w == the_word.word, \
-                    "%s,%s" %(w, the_word.word)
+                    "%s, %s,%s" %(the_sentence, w, the_word.word)
             the_word.phrase = the_phrase
 #             the_word.index_in_phrase = i
             the_phrase.words.append(the_word)
